@@ -1,14 +1,16 @@
-const db = require("../config/config");
+const { db } = require("../config/config");
 
 const getAllProducts = async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM products");
     res.send(result);
+    console.log(db);
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
   }
 };
+
 
 const addProduct = async (req, res) => {
   const { name, price, description } = req.body;

@@ -15,7 +15,7 @@ function Navbar() {
         </div>
         <div className="center">
           <div className="logo">
-            <h1>ECCOM.</h1>
+            <h1>ShopKart.</h1>
           </div>
         </div>
         <div className="right">
