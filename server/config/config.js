@@ -1,5 +1,11 @@
-const pgp = require("pg-promise")();
-const db = pgp("postgresql://postgres:1997@localhost:5432/eccom");
+const pgp = require('pg-promise')();
+const db = pgp({
+  host: 'localhost',
+  port: 5432,
+  database: 'eccom',
+  user: 'postgres',
+  password: '1997'
+});
 
 db.one('SELECT $1 AS value', 'psql running successfully')
   .then((data) => {
@@ -9,4 +15,7 @@ db.one('SELECT $1 AS value', 'psql running successfully')
     console.log('ERROR:', error)
   })
 
-module.exports = {db };
+module.exports = {
+  pgp,
+  db,
+};
