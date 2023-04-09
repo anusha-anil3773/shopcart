@@ -6,21 +6,26 @@ import StyledBadge from "@mui/material/Badge";
 import config from "../../utils/config.json";
 import Cart from '../cart/cart'
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-function Navbar() {
-  const [cartItems, setCartItems] = useState([]);
 
+function Navbar() {
+  const [cartCount, setCartCount] = useState(0);
+  const fetchCartCount = async () => {
+    try {
+      const response = await axios.get(`/${config.api_base_url}/cart/count`);
+      const cartCount = response.data.totalQuantity;
+      setCartCount(cartCount);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  // Call fetchCartCount on component mount
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.get(`/${config.api_base_url}/cart/items`);
-        const data = response.data;
-        setCartItems(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCartItems();
+    fetchCartCount();
   }, []);
+  
+
+
 
   return (
     <div className="container1">
@@ -41,11 +46,10 @@ function Navbar() {
           <div className="menuitems">REGISTER</div>
           <div className="menuitems">SIGN IN</div>
           <div className="menuitems">
-            <StyledBadge badgeContent={quantity} color="secondary">
+            <StyledBadge badgeContent={cartCount} color="secondary">
               <ShoppingCartIcon />
             </StyledBadge>
           </div>
-          <div className="cart-count">{cartItems.length}</div>
         </div>
       </div>
     </div>

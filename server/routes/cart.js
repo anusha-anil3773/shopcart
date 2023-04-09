@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
+  getCart,
   getCartItems,
   addItem,
   deleteItem,
@@ -9,10 +10,10 @@ const {
 } = require("../controllers/cart");
 
 // GET /cart/:cart_id/items
-router.get("/items", getCartItems);
+router.get("/:cart_id/items", getCartItems);
 
 // POST /cart/:cart_id/items
-router.post("/:cart_id/items/add", addItem);
+router.post("/items/add", addItem);
 
 // DELETE /cart/:cart_id/items
 router.delete("/:cart_id/items/delete", deleteItem);

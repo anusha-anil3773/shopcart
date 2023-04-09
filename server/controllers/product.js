@@ -7,7 +7,7 @@ const getAllProducts = async (req, res) => {
     console.log(db);
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    res.send("Error " + err);00       
   }
 };
 
