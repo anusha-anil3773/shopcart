@@ -11,7 +11,9 @@ function Items() {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`/${config.api_base_url}/api/products`);
+        const response = await axios.get(
+          `/${config.api_base_url}/api/products`
+        );
         const data = response.data;
         setCartItems(data);
       } catch (error) {
@@ -23,7 +25,10 @@ function Items() {
 
   const addToCart = async (item) => {
     try {
-      const response = await axios.post(`/${config.api_base_url}/cart/${cart_id}/items/add`, item);
+      const response = await axios.post(
+        `${config.api_base_url}/cart/items/add`,
+        item
+      );
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -43,9 +48,11 @@ function Items() {
             <p>{item.price}</p>
             <p>{item.description}</p>
             <button className="button">Buy Now</button>&nbsp;&nbsp;
-            <button className="bttn" onClick={() => addToCart(item)}>
-              Add to Cart
-            </button>
+            <Link to="/cart">
+              <button className="bttn" onClick={() => addToCart(item)}>
+                Add to Cart
+              </button>
+            </Link>
           </div>
         </div>
       ))}

@@ -1,54 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
-import'./cart.css'
+import "./cart.css";
 import Footer from "../Footer/Footer";
-
+import axios from "axios";
+import config from "../../utils/config.json";
+import Cartitems from "../Cartitems/Cartitems";
 
 function Cart() {
-  const [quantity, setQuantity] = useState(1);
+  const [cartItems, setCartItems] = useState([]);
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await axios.get(`${config.api_base_url}/cart/items`);
+        setCartItems(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchCartItems();
+  }, []);
 
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+
+  const removeItemFromCart  = async () => {
+    try {
+      const response = await axios.delete(`${config.api_base_url}/cart/items/delete`);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
     }
   };
+
+
+
+  
 
   return (
     <div>
       <Navbar />
-      <div class="contain">
-  <div class="card" style={{ width: '500px' }}>
-    <div class="card-header">
-      <img src="https://rukminim1.flixcart.com/image/312/312/kg8avm80/mobile/y/7/n/apple-iphone-12-dummyapplefsn-original-imafwg8dpyjvgg3j.jpeg?q=70" />
-    </div>
-    <div class="card-body">
-      <h3 class="card-title">Special title treatment</h3>
-      <p class="card-text">
-        With supporting text below as a natural lead-in to additional content.
-      </p>
-      <div class="quantity">
-        <button class="decrement" onClick={handleDecrement}>-</button>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          min="1"
-          value={quantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value))}
-        />
-        <button class="increment" onClick={handleIncrement}>+</button>
+      <div className="card-container">
+        {cartItems.map((item) => (
+          <Cartitems key={item.id} item={item} removeItemFromCart={removeItemFromCart} />
+        ))}
       </div>
-      <button class="add-to-cart">Place Order</button>&nbsp;&nbsp;
-      <button class="add-to-cart">Remove</button>
-    </div>
-  </div>
-</div>
-
-
       <Footer />
     </div>
   );

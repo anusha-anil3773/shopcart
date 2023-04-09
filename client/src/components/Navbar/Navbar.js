@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 import SearchIcon from "@mui/icons-material/Search";
 import StyledBadge from "@mui/material/Badge";
@@ -8,26 +9,22 @@ import Cart from '../cart/cart'
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function Navbar() {
-  const [cartCount, setCartCount] = useState(0);
-  const fetchCartCount = async () => {
-    try {
-      const response = await axios.get(`/${config.api_base_url}/cart/count`);
-      const cartCount = response.data.totalQuantity;
-      setCartCount(cartCount);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  // Call fetchCartCount on component mount
+
+
+  const [cartItems, setCartItems] = useState([]);
+
   useEffect(() => {
-    fetchCartCount();
+    const fetchCartItems = async () => {
+      try {
+        const response = await axios.get(`${config.api_base_url}/cart/items`);
+        setCartItems(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchCartItems();
   }, []);
-  
-
-
-
-  return (
+ return (
     <div className="container1">
       <div className="Wrapper">
         <div className="left">
@@ -42,11 +39,11 @@ function Navbar() {
           </div>
         </div>
         <div className="right">
-          <div className="menuitems">HOME</div>
+        <Link to="/home"><div className="menuitems">HOME</div></Link>
           <div className="menuitems">REGISTER</div>
           <div className="menuitems">SIGN IN</div>
           <div className="menuitems">
-            <StyledBadge badgeContent={cartCount} color="secondary">
+            <StyledBadge badgeContent={cartItems.length} color="secondary">
               <ShoppingCartIcon />
             </StyledBadge>
           </div>

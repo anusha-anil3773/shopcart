@@ -10,13 +10,13 @@ const {
 } = require("../controllers/cart");
 
 // GET /cart/:cart_id/items
-router.get("/:cart_id/items", getCartItems);
+router.get("/items", getCartItems);
 
 // POST /cart/:cart_id/items
 router.post("/items/add", addItem);
 
 // DELETE /cart/:cart_id/items
-router.delete("/:cart_id/items/delete", deleteItem);
+router.delete("/items/delete", deleteItem);
 
 // PUT /cart/:cart_id/items/increase
 router.put("/:cart_id/items/increase", increaseItemQuantity);
