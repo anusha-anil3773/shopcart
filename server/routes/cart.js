@@ -9,7 +9,7 @@ const {
 } = require("../controllers/cart");
 
 // GET /cart/:cart_id/items
-router.get("/:cart_id/items", getCartItems);
+router.get("/items", getCartItems);
 
 // POST /cart/:cart_id/items
 router.post("/:cart_id/items/add", addItem);

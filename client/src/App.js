@@ -1,16 +1,16 @@
 import Home from "./pages/Home";
-import { Routes } from "react-router-dom"
-
+import { Route,Routes } from "react-router-dom"
+import Cart from "./components/cart/cart";
 
 function App() {
   return (
   
    <div>
-       <Home/>
+       
       <Routes>
-      
-          
-        </Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/cart" element={<Cart />} />
+      </Routes>
     
    </div>
   )

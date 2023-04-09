@@ -1,23 +1,54 @@
-
-.row{
-    margin-left: 20px;
-    color: #fff;
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.posters{
-    display: flex;
-    padding: 20px;
-    overflow-x: scroll;
-    overflow-y:hidden ;
+.card {
+  width: 19rem;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.posters::-webkit-scrollbar{
-    display: none;
+.card img {
+  width: 50%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.poster{
-    max-height: 250px;
-    margin-right: 10px;
-
+.card-content {
+  padding: 1rem;
 }
+
+.card h3 {
+  font-size: 1.2rem;
+}
+.button{
+background-color:  #000000;
+color: aliceblue;
+border-radius: 15px;
+border: none;
+width:9em;
+height: 2.5em;
+cursor: pointer;
+}
+.bttn {
+    color: black;
+    background-color: white;
+    border-radius: 15px;
+    width: 9em;
+    cursor: pointer;
+    height: 2.5em;
+  }
+  
+  .bttn:hover {
+    background-color: black;
+    color: white;
+  }
+  
