@@ -16,7 +16,7 @@ router.get("/items", getCartItems);
 router.post("/items/add", addItem);
 
 // DELETE /cart/:cart_id/items
-router.delete("/items/delete", deleteItem);
+// router.delete("/items/delete/:product_id", deleteItem);
 
 // PUT /cart/:cart_id/items/increase
 router.put("/:cart_id/items/increase", increaseItemQuantity);

@@ -5,7 +5,6 @@ import "./Navbar.css";
 import SearchIcon from "@mui/icons-material/Search";
 import StyledBadge from "@mui/material/Badge";
 import config from "../../utils/config.json";
-import Cart from '../cart/cart'
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function Navbar() {
@@ -43,9 +42,12 @@ function Navbar() {
           <div className="menuitems">REGISTER</div>
           <div className="menuitems">SIGN IN</div>
           <div className="menuitems">
-            <StyledBadge badgeContent={cartItems.length} color="secondary">
+          <Link to="/cart">
+          <StyledBadge badgeContent={cartItems.length} color="secondary">
               <ShoppingCartIcon />
             </StyledBadge>
+            </Link>
+            
           </div>
         </div>
       </div>

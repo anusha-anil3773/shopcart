@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import config from "../../utils/config.json";
 
 import "./items.css";
@@ -48,11 +47,11 @@ function Items() {
             <p>{item.price}</p>
             <p>{item.description}</p>
             <button className="button">Buy Now</button>&nbsp;&nbsp;
-            <Link to="/cart">
+         
               <button className="bttn" onClick={() => addToCart(item)}>
                 Add to Cart
               </button>
-            </Link>
+          
           </div>
         </div>
       ))}

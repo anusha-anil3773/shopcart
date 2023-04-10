@@ -12,7 +12,6 @@ try {
   }
 };
 
-
 //cart add
 const addItem = async (req, res) => {
   const { product_id} = req.body;
@@ -52,26 +51,35 @@ const addItem = async (req, res) => {
 
 //delete cart item
 
-const deleteItem = async (req, res) => {
-  const product_id = req.body;
-  console.log(req.body);
-  if (!product_id) {
-    return res.status(400).send("Product ID is missing from the request body");
-  }
+// const deleteItem = async (req, res) => {
+//    const { product_id} = req.body;
 
-  try {
-    const result = await db.query(
-      "DELETE FROM cart_item WHERE product_id = $1 RETURNING *",
-      [product_id]
-    );
-    res.send(result);
-  } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
-  }
-}
-;
+//    try {
+//     const result = await db.query('DELETE FROM cart_item WHERE product_id = $1 RETURNING *', [product_id]);
+//     console.log(result)
+//     console.log(req.body)
+//     console.log(product_id)
+//     res.status(200).json(result);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
 
+
+// const deleteProduct = async (req, res) => {
+//   const product_id = req.params.product_id;
+//   try {
+//     const result = await db.query(
+//       "DELETE FROM products WHERE product_id = $1 RETURNING *",
+//       [product_id]
+//     );
+//     res.send(result);
+//   } catch (err) {
+//     console.error(err);
+//     res.send("Error " + err);
+//   }
+// };
 
 //increment quantity
 const increaseItemQuantity = async (req, res) => {
@@ -119,7 +127,7 @@ res.status(200).json(updatedItem);
   module.exports = {
     getCartItems,
     addItem,
-    deleteItem,
+    // deleteItem,
     increaseItemQuantity,
     decreaseItemQuantity
   };

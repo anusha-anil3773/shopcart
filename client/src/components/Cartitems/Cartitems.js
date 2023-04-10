@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import './Cartitems.css'
+import Cart from "../cart/cart";
 
-function Cartitems({ item, removeItemFromCart }) {
+function Cartitems({ item,deleteItem }) {
   const [quantity, setQuantity] = useState(1);
+  const { decrement, increment } = Cart();
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
+  const increase = () => {
+    increment(item.product_id);
   };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
+  const decrease = () => {
+    decrement(item.product_id);
+  };;
 
 
   return (
@@ -27,26 +26,31 @@ function Cartitems({ item, removeItemFromCart }) {
           <p>{item.price}</p>
           <p>{item.description}</p>
           <div class="quantity">
-            <button class="decrement" onClick={handleDecrement}>
-              -
-            </button>
+          <button
+          size="small"
+          layout="outline"
+          disabled={item.quantity === 1}
+          onClick={() => decrease()}
+        >
+          -
+        </button>
             <input
               type="number"
               id="quantity"
               name="quantity"
               min="1"
-              value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              value={item.quantity}
+              onChange={(e) => setQuantity((e.target.value))}
             />
-            <button class="increment" onClick={handleIncrement}>
-              +
-            </button>
+              <button size="small" layout="outline" onClick={() => increase()}>
+          +
+        </button>
           </div>
          
          
           <button
             class="add-to-cart"
-            onClick={() => removeItemFromCart(item.id)}
+            onClick={() => deleteItem(item.product_id)}
           >
             Remove
           </button>

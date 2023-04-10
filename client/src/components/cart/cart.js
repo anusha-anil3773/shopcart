@@ -6,7 +6,7 @@ import axios from "axios";
 import config from "../../utils/config.json";
 import Cartitems from "../Cartitems/Cartitems";
 
-function Cart() {
+function Cart(props) {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -22,17 +22,15 @@ function Cart() {
   }, []);
 
 
-  const removeItemFromCart  = async () => {
-    try {
-      const response = await axios.delete(`${config.api_base_url}/cart/items/delete`);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-
-
+  // const removeItemFromCart = async (product_id) => {
+  //   try {
+  //     const response = await axios.delete(`${config.api_base_url}/cart/${product_id}/items/delete`);
+  //     console.log(response);
+  //     setCartItems(response.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   
 
   return (
@@ -40,7 +38,10 @@ function Cart() {
       <Navbar />
       <div className="card-container">
         {cartItems.map((item) => (
-          <Cartitems key={item.id} item={item} removeItemFromCart={removeItemFromCart} />
+          <Cartitems 
+          key={item.id} 
+          item={item} 
+          />
         ))}
       </div>
       <Footer />
