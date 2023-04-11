@@ -17,7 +17,6 @@ const getCartItems = async (req, res) => {
 };
 
 //cart add
-//cart add
 const addItem = async (req, res) => {
   const { product_id } = req.body;
 
@@ -53,42 +52,58 @@ const addItem = async (req, res) => {
 };
 
 //delete cart item
+const deleteItem = async (req, res) => {
+  const { product_id } = req.params;
 
-// const deleteItem = async (req, res) => {
-//    const { product_id} = req.body;
-
-//    try {
-//     const result = await db.query('DELETE FROM cart_item WHERE product_id = $1 RETURNING *', [product_id]);
-//     console.log(result)
-//     console.log(req.body)
-//     console.log(product_id)
-//     res.status(200).json(result);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Server error" });
-//   }
-// };
+  try {
+    const result = await db.query(
+      "DELETE FROM cart_item WHERE product_id = $1 RETURNING *",
+      [product_id]
+    );
+    console.log(result);
+    res
+      .status(200)
+      .json({ success: true, message: "Item deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
 
 // increment item quantity by 1
 const increaseItemQuantity = async (req, res) => {
   const { product_id } = req.body;
 
-  const cart = await cartService.increaseQuantity({ product_id });
-  res.json(cart);
+  try {
+    const result = await db.query(
+      "update cart_item set quantity = quantity + 1 where  cart_item.product_id = $1",
+      [product_id]
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
 // decrement item quantity by 1
 const decreaseItemQuantity = async (req, res) => {
   const { product_id } = req.body;
-  const cart_id = req.user.cart_id;
-
-  const cart = await cartService.decreaseQuantity({ cart_id, product_id });
-  res.json(cart);
+  try {
+    const result = await db.query(
+      "update cart_item set quantity = quantity - 1 where  cart_item.product_id = $1",
+      [product_id]
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
 };
 module.exports = {
   getCartItems,
   addItem,
-  // deleteItem,
+  deleteItem,
   increaseItemQuantity,
   decreaseItemQuantity,
 };

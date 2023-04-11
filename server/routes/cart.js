@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getCart,
+
   getCartItems,
   addItem,
   deleteItem,
@@ -16,7 +16,7 @@ router.get("/items", getCartItems);
 router.post("/items/add", addItem);
 
 // DELETE /cart/:cart_id/items
-// router.delete("/items/delete", deleteItem);
+router.delete("/:product_id/delete", deleteItem);
 
 // PUT /cart/:cart_id/items/increase
 router.put("/increase/:product_id", increaseItemQuantity);
