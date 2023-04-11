@@ -1,11 +1,15 @@
 const { db } = require("../config/config");
 //cart get
-const getCartItems = async (req, res) => {
-try {
-    const result = await db.query(
-      "SELECT * FROM cart_item ");
 
- res.status(200).json(result);
+const getCartItems = async (req, res) => {
+  try {
+    const result = await db.query(`
+    SELECT c.product_id, p.name, p.price, p.description, c.quantity 
+    FROM cart_item c 
+    JOIN products p ON c.product_id = p.product_id;
+    
+    `);
+    res.json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -13,35 +17,34 @@ try {
 };
 
 //cart add
+//cart add
 const addItem = async (req, res) => {
-  const { product_id} = req.body;
+  const { product_id } = req.body;
 
   try {
-    const cart=await db.query("SELECT * FROM cart_item");
-    console.log(cart)
-    const existing = cart.find(item=> item.product_id === product_id)
-    console.log(existing)
+    const cart = await db.query("SELECT * FROM cart_item");
+    console.log(cart);
+    const existing = cart.find((item) => item.product_id === product_id);
+    console.log(existing);
     let result;
 
-    if(!existing ){
-      let quantity=1;
-       result = await db.query(
+    if (!existing) {
+      let quantity = 1;
+      result = await db.query(
         "INSERT INTO cart_item (product_id, quantity) VALUES ($1, $2) RETURNING *",
         [product_id, quantity]
-  
       );
-      console.log(result)
-    }else{
-       result = await db.query(
+      console.log(result);
+    } else {
+      result = await db.query(
         "UPDATE cart_item SET quantity = quantity + 1 WHERE  product_id = $1 RETURNING *",
-        [ product_id]
+        [product_id]
       );
-      console.log(result)
+      console.log(result);
     }
-    console.log(req.body)
-    console.log(product_id)
-    
-    
+    console.log(req.body);
+    console.log(product_id);
+
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
@@ -66,68 +69,26 @@ const addItem = async (req, res) => {
 //   }
 // };
 
-
-// const deleteProduct = async (req, res) => {
-//   const product_id = req.params.product_id;
-//   try {
-//     const result = await db.query(
-//       "DELETE FROM products WHERE product_id = $1 RETURNING *",
-//       [product_id]
-//     );
-//     res.send(result);
-//   } catch (err) {
-//     console.error(err);
-//     res.send("Error " + err);
-//   }
-// };
-
-//increment quantity
+// increment item quantity by 1
 const increaseItemQuantity = async (req, res) => {
   const { product_id } = req.body;
-  const cart_id = req.params.cart_id;
-try {
-    const result = await db.query(
-      "UPDATE cart_item SET quantity = quantity + 1 WHERE cart_id = $1 AND product_id = $2 RETURNING *",
-      [cart_id, product_id]
-    );
-   res.status(200).json(result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
+
+  const cart = await cartService.increaseQuantity({ product_id });
+  res.json(cart);
 };
-//decrement quantity
+
+// decrement item quantity by 1
 const decreaseItemQuantity = async (req, res) => {
   const { product_id } = req.body;
-  const cart_id = req.params.cart_id;
-try {
-    const result = await db.query(
-      "UPDATE cart_item SET quantity = quantity - 1 WHERE cart_id = $1 AND product_id = $2 RETURNING *",
-      [cart_id, product_id]
-    )
-    // console.log(result)
- if (result.rowCount === 0) {
-      return res.status(404).json({ error: "Item not found in cart" });
-    }
-const updatedItem = result;
-if (updatedItem.quantity === 0) {
-      await db.query(
-        "DELETE FROM cart_item WHERE cart_id = $1 AND product_id = $2",
-        [cart_id, product_id]
-      );
-      updatedItem.status = "removed";
-    }
-res.status(200).json(updatedItem);
-  } catch (err) {
-   {
-      console.error(err);
-      res.status(500).json({ error: "Server error" });
-    }
-  }}
-  module.exports = {
-    getCartItems,
-    addItem,
-    // deleteItem,
-    increaseItemQuantity,
-    decreaseItemQuantity
-  };
+  const cart_id = req.user.cart_id;
+
+  const cart = await cartService.decreaseQuantity({ cart_id, product_id });
+  res.json(cart);
+};
+module.exports = {
+  getCartItems,
+  addItem,
+  // deleteItem,
+  increaseItemQuantity,
+  decreaseItemQuantity,
+};

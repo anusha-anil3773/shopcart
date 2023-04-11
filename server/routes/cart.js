@@ -16,12 +16,12 @@ router.get("/items", getCartItems);
 router.post("/items/add", addItem);
 
 // DELETE /cart/:cart_id/items
-// router.delete("/items/delete/:product_id", deleteItem);
+// router.delete("/items/delete", deleteItem);
 
 // PUT /cart/:cart_id/items/increase
-router.put("/:cart_id/items/increase", increaseItemQuantity);
+router.put("/increase/:product_id", increaseItemQuantity);
 
 // PUT /cart/:cart_id/items/decrease
-router.put("/:cart_id/items/decrease", decreaseItemQuantity);
+router.put("/decrease/:product_id", decreaseItemQuantity);
 
 module.exports = router;
