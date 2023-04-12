@@ -32,16 +32,17 @@ function Items() {
     } catch (error) {
       console.error(error);
     }
+    window.location.reload()
   };
 
   return (
     <div className="card-container">
       {cartItems.map((item) => (
         <div className="card" key={item.id}>
-          <img
+          {/* <img
             src="https://rukminim1.flixcart.com/image/312/312/kg8avm80/mobile/y/7/n/apple-iphone-12-dummyapplefsn-original-imafwg8dpyjvgg3j.jpeg?q=70"
             alt="product"
-          />
+          /> */}
           <div className="card-content">
             <h3>{item.name}</h3>
             <p>{item.price}</p>

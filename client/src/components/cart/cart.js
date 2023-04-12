@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./cart.css";
 import Footer from "../Footer/Footer";
@@ -8,6 +8,7 @@ import Cartitems from "../Cartitems/Cartitems";
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
+  const [cartData, setCartData] = useState();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -35,52 +36,29 @@ function Cart() {
     }
   };
 
-  const increment = async (product_id, newQuantity) => {
-    try {
-      const response = await axios.put(`${config.api_base_url}/cart/increase/${product_id}`, { product_id, quantity: newQuantity });
-      console.log(response);
-      setCartItems(prevCartItems => {
-        const updatedCartItems = prevCartItems.map(item => {
-          if (item.product_id === product_id) {
-            return {
-              ...item,
-              quantity: newQuantity
-            };
-          } else {
-            return item;
-          }
-        });
-        return updatedCartItems;
-      });
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  async function increment(product_id) {
+    const res = await axios.put(
+      `${config.api_base_url}/cart/increase/${product_id}`,
+      { product_id }
+    );
+    setCartData({ ...cartData });
+    return res;
+  }
+  
+  async function decrement(product_id) {
+    const res = await axios.put(
+      `${config.api_base_url}/cart/decrease/${product_id}`,
+      { product_id }
+    );
+    setCartData({ ...cartData});
+    return res;
+  }
+  
+  useEffect(() => {
+  }, [increment, decrement]);
   
 
-  const decrement = async (product_id, newQuantity) => {
-    try {
-      const response = await axios.put(`${config.api_base_url}/cart/decrease/${product_id}`, { product_id, quantity: newQuantity });
-      console.log(response);
-      const updatedCartItems = cartItems.map(item => {
-        if (item.product_id === product_id) {
-          return {
-            ...item,
-            quantity: newQuantity
-          };
-        } else {
-          return item;
-        }
-      });
-      setCartItems(updatedCartItems);
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
+return (
     <div>
       <Navbar />
       <div className="card-container">

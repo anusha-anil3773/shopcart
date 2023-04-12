@@ -44,9 +44,7 @@ const deleteItem = async (req, res) => {
       [product_id]
     );
     console.log(result);
-    res
-      .status(200)
-      .json({ success: true, message: "Item deleted successfully" });
+    res.status(200).json({ success: true, message: "success" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -59,10 +57,13 @@ const increaseItemQuantity = async (req, res) => {
 
   try {
     const result = await db.query(
-      `UPDATE cart_item SET quantity = quantity + 1 WHERE cart_item.product_id = $1 RETURNING *`,
+      `UPDATE cart_item SET quantity = quantity + 1 WHERE product_id = $1 RETURNING *`,
       [product_id]
     );
-    res.status(200).json(result);
+    console.log(result);
+    res
+    .status(200)
+    .json({ success: true, message: "Item deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -75,10 +76,11 @@ const decreaseItemQuantity = async (req, res) => {
   
     try {
       const result = await db.query(
-        `UPDATE cart_item SET quantity = quantity - 1 WHERE cart_item.product_id = $1 RETURNING *`,
+        `UPDATE cart_item SET quantity = quantity - 1 WHERE product_id = $1 RETURNING *`,
         [product_id]
       );
-      res.status(200).json(result);
+      console.log(result);
+      res.status(200).json({ success: true, message: "success" });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Server error" });
