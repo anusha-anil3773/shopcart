@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 150px;
+    color: white;
+    background-image: url(https://t4.ftcdn.net/jpg/03/55/12/37/360_F_355123783_WjUgN86awgqdCdPKkfPDgZFJTN5qvtaI.jpg);
+    background-size: cover;
+  }
+  
+  .form {
+    margin: 20PX;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+  }
+  
+  .form input {
+  
+ width: 300px;
+    background-color: rgb(245, 238, 242);
+  }
+  
+  .form button {
+    margin-top: 20px;
+  }
+  

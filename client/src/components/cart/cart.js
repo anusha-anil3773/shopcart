@@ -21,7 +21,7 @@ function Cart() {
       }
     };
     fetchCartItems();
-  }, []);
+  }, [cartItems]);
 
   const deleteItem = async (product_id) => {
     try {

@@ -28,7 +28,5 @@ const addProduct = async (req, res) => {
 
 module.exports = {
 getAllProducts,
-addProduct,
-getAllProducts
- 
+addProduct
 };
