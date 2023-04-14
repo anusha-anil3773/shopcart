@@ -39,8 +39,8 @@ function Navbar() {
         </div>
         <div className="right">
         <Link to="/home"><div className="menuitems"></div></Link>
-          <div className="menuitems">REGISTER</div>
-          <div className="menuitems">SIGN IN</div>
+        <Link to="/signup"><div to="/signup" className="menuitems">REGISTER</div></Link>
+         <div className="menuitems">SIGN IN</div>
           <div className="menuitems">
           <Link to="/cart">
           <StyledBadge badgeContent={cartItems.length} color="secondary">

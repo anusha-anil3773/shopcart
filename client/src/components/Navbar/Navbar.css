@@ -48,3 +48,6 @@
   cursor: pointer;
   margin-left: 28px;
 }
+.menuitems .link{
+  text-decoration: none;
+}
