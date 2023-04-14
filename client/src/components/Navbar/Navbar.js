@@ -22,7 +22,7 @@ function Navbar() {
       }
     };
     fetchCartItems();
-  }, []);
+  }, [cartItems]);
  return (
     <div className="container1">
       <div className="Wrapper">
@@ -38,7 +38,7 @@ function Navbar() {
           </div>
         </div>
         <div className="right">
-        <Link to="/home"><div className="menuitems">HOME</div></Link>
+        <Link to="/home"><div className="menuitems"></div></Link>
           <div className="menuitems">REGISTER</div>
           <div className="menuitems">SIGN IN</div>
           <div className="menuitems">
