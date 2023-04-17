@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Navbar from "../../components/Navbar/Navbar";
-// import Footer from "../components/Footer/Footer";
-import "./login.css"; // Import the CSS file
+import "./login.css"; 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../../utils/config.json";
+
+
 function Login() {
+
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
-  const [authenticated, setauthenticated] = useState(false);
+  const[isLogged, setIsLogged] = useState(false);
   const navigate = useNavigate();
 
   const login = async (event) => {
@@ -23,12 +25,14 @@ function Login() {
 
       if (response.status === 200) {
         if (response.data.message) {
+
           alert("Invalid credentials");
         } else {
-          setauthenticated(true);
+          setIsLogged(true);
           navigate("/home");
         }
       } else {
+        
         alert("Request failed");
       }
     } catch (error) {
@@ -38,7 +42,7 @@ function Login() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isLogged={setIsLogged} />
       <div className="container">
         <form className="form" onSubmit={login}>
           <TextField
