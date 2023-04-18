@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
@@ -7,7 +7,7 @@ import StyledBadge from "@mui/material/Badge";
 import config from "../../utils/config.json";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-function Navbar({ isLogged}) {
+function Navbar({ isLogged }) {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -45,9 +45,10 @@ function Navbar({ isLogged}) {
               <Link to="/signup">
                 <div to="/signup" className="menuitems">
                   REGISTER
-                </div>
+                </div></Link>
+                <Link to="/login">
+                <div className="menuitems">SIGN IN</div>
               </Link>
-              <div className="menuitems">SIGN IN</div>
             </>
           ) : (
             <>

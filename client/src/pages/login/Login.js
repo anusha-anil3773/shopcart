@@ -6,10 +6,9 @@ import "./login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../../utils/config.json";
-
+import { Outlet} from "react-router-dom";
 
 function Login() {
-
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const[isLogged, setIsLogged] = useState(false);
@@ -18,7 +17,7 @@ function Login() {
   const login = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`${config.api_base_url}/user/add`, {
+      const response = await axios.post(`${config.api_base_url}/user/login`, {
         username: username,
         password: password,
       });

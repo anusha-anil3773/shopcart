@@ -47,7 +47,10 @@
   font-size: 14px;
   cursor: pointer;
   margin-left: 28px;
-}
-.menuitems .link{
   text-decoration: none;
 }
+
+.menuitems:hover {
+  text-decoration: none;
+}
+
