@@ -63,6 +63,9 @@ function Navbar({ isLogged }) {
               <Link to="/login">
                 <div className="menuitems">SIGN IN</div>
               </Link>
+              <Link to="/logout">
+                <div className="menuitems">LogOut</div>
+              </Link>
               <div className="menuitems">
                 <Link to="/cart">
                   <StyledBadge

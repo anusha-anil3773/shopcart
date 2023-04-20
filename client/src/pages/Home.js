@@ -4,14 +4,18 @@ import Main from '../components/main/main'
 import Footer from '../components/Footer/Footer'
 import Item from '../components/items/items'
 
+
 function Home() {
+
   return (
     <div>
-  
-        <Navbar/>
+
+   <Navbar/>
         <Main/>
         <Item/>
         <Footer/>
+ 
+        
     </div>
   )
 }
