@@ -1,0 +1,11 @@
+export const LOGIN_USER = 'LOGIN_USER'
+export const USER_LOGGEDIN = 'USER_LOGGEDIN'
+
+export const LOGOUT_USER = 'LOGOUT_USER'
+export const USER_LOGGEDOUT = 'USER_LOGGEDOUT'
+
+export const ADD_TO_CART ='ADD_TO_CART';
+export const REMOVE_TO_CART ='REMOVE_TO_CART';
+export const EMPTY_TO_CART ='EMPTY_TO_CART';
+export const PRODUCT_LIST="PRODUCT_LIST";
+export const SET_PRODUCT_LIST="SET_PRODUCT_LIST";

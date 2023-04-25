@@ -1,177 +1,102 @@
-import React, { useState,useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Navbar from "../../components/Navbar/Navbar";
-import "./login.css"; 
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import config from "../../utils/config.json";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Form, Row, Col, Button } from 'reactstrap'
 
-function Login() {
-  const [username, setusername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState(false); // initialize to false
-  const navigate = useNavigate();
+import FormControl from './FormControl'
+import { loginUserAction } from '../../redux/action/UserAction.js'
 
-  axios.defaults.withCredentials = true;
+class Login extends Component {
 
-  const login = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post(`${config.api_base_url}/user/login`, {
-        username: username,
-        password: password,
-      });
-      console.log(response)
-      if (response.status === 200) {
-        if (response.data.message) {
-          alert("Invalid credentials");
-        } else {
-          setLoginStatus(true); // update login status
-          navigate("/home");
-          console.log(response)
-        }
-      } else {
-        alert("Request failed");
-      }
-    } catch (error) {
-      console.error(error);
+    state = {
+        data: {
+            username: '',
+            password: ''
+        },
+        errors: {}
     }
-  };
 
-  useEffect(() => {
-    axios.get(`${config.api_base_url}user/login`).then((response) => {
-      console.log(response)
-      if (response.data.loggedIn === true) {
-        setLoginStatus(true); // update login status
-      }
-    });
-  }, []);
-  
-  
+    validate = () => {
+        const { data } = this.state
+        const errors = {}
 
-  return (
-    <div>
-      <Navbar isLogged={setLoginStatus} />
-      <div className="container">
-        <form className="form" onSubmit={login}>
-          <TextField
-            label="UserName"
-            variant="filled"
-            type="text"
-            required
-            value={username}
-            onChange={(e) => setusername(e.target.value)}
-          />{" "}
-          &nbsp; &nbsp;
-          <TextField
-            label="Password"
-            variant="filled"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />{" "}
-          &nbsp; &nbsp;
-          <Button type="submit" variant="contained" color="primary">
-            Login
-          </Button>
-        </form>
-      </div>
-    </div>
-  );
+        if (data.username === '') errors.username = 'Username cannot be blank.'
+        if (data.password === '') errors.password = 'Password cannot be blank.'
+
+        return errors
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        const { data } = this.state
+        const errors = this.validate()
+
+        if (Object.keys(errors).length === 0) {
+            this.props.login(data)
+
+            this.setState({
+                data: {
+                    username: '',
+                    password: ''
+                },
+                errors: {}
+            })
+        } else {
+            this.setState({
+                errors
+            })
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            data: {
+                ...this.state.data,
+                [e.target.id]: e.target.value
+            },
+            errors: {
+                ...this.state.errors,
+                [e.target.id]: ''
+            }
+        })
+    }
+
+    render() {
+        const { data, errors } = this.state
+
+        return (
+            <Row>
+                <Col md={4}>
+                    <Form onSubmit={this.handleSubmit}>
+                        <FormControl
+                            label="Username"
+                            type="text"
+                            value={data.username}
+                            handleChange={this.handleChange}
+                            error={errors.username}
+                        />
+
+                        <FormControl
+                            label="Password"
+                            type="password"
+                            value={data.password}
+                            handleChange={this.handleChange}
+                            error={errors.password}
+                        />
+
+                        <Button color="primary">Login</Button>
+                    </Form>
+                </Col>
+            </Row>
+        )
+    }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+    return {
+        login: (username,password) => {
+            dispatch(loginUserAction(username,password))
+        }
+    }
+}
 
-// function Login() {
-//   const [username, setusername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [loginStatus, setLoginStatus] = useState("");
-//   const navigate = useNavigate();
-
-//   axios.defaults.withCredentials = true;
-
-//   const login = async (event) => {
-//     event.preventDefault();
-//     try {
-//       const response = await axios.post(`${config.api_base_url}/user/login`, {
-//         username: username,
-//         password: password,
-//       });
-
-//       if (response.status === 200) {
-//         if (response.data.message) {
-
-//           alert("Invalid credentials");
-//         } else {
-//           setLoginStatus(true);
-//           navigate("/home");
-//         }
-//       } else {
-        
-//         alert("Request failed");
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-  // const login = () => {
-  //   axios.post(`${config.api_base_url}/user/login`, {
-  //     username: username,
-  //     password: password,
-  //   }).then((response) => {
-  //     if (response.data.message) {
-  //       setLoginStatus(response.data.message===true);
-  //       navigate("/home");
-  //     } else {
-  //       setLoginStatus(response.data[0].username);
-  //     }
-  //   });
-  // };
-//   useEffect(() => {
-//     axios.get(`${config.api_base_url}/user/login`).then((response) => {
-//       console.log(response)
-//       if (response.data.loggedIn == true) {
-//         setLoginStatus(response.data.user[0].username);
-//         setLoginStatus(true);
-//         console.log(response)
-//       }
-//     });
-//   }, []);
-  
-
-//   return (
-//     <div>
-//       <Navbar isLogged={setLoginStatus} />
-//       <div className="container">
-//         <form className="form" onSubmit={login}>
-//           <TextField
-//             label="UserName"
-//             variant="filled"
-//             type="text"
-//             required
-//             value={username}
-//             onChange={(e) => setusername(e.target.value)}
-//           />{" "}
-//           &nbsp; &nbsp;
-//           <TextField
-//             label="Password"
-//             variant="filled"
-//             type="password"
-//             required
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//           />{" "}
-//           &nbsp; &nbsp;
-//           <Button type="submit" variant="contained" color="primary">
-//             Login
-//           </Button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Login;
+export default connect(null, mapDispatchToProps)(Login)
