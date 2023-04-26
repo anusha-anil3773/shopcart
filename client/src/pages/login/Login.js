@@ -23,7 +23,7 @@ function Login(props) {
 
   return (
     <div>
-      <Navbar />
+        <Navbar isLogged={props.loginStatus} />
       <div className="container">
         <form className="form" onSubmit={login}>
           <TextField

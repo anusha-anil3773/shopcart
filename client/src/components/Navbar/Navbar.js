@@ -9,79 +9,64 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function Navbar({ isLogged }) {
   const [cartItems, setCartItems] = useState([]);
-
+  
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.get(`${config.api_base_url}/cart/items`);
-        setCartItems(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCartItems();
-  }, [cartItems]);
-
+  const fetchCartItems = async () => {
+  try {
+  const response = await axios.get(`/${config.api_base_url}/cart/items`);
+  setCartItems(response.data);
+  } catch (error) {
+  console.error(error);
+  }
+  };
+  fetchCartItems();
+  }, []);
+  
   return (
-    <div className="container1">
-      <div className="Wrapper">
-        <div className="left">
-          <div className="Language">EN</div>
-          <div className="search">
-            <input /> <SearchIcon style={{ color: "gray", fontSize: "16px" }} />{" "}
-          </div>
-        </div>
-        <div className="center">
-          <div className="logo">
-            <h1>ShopKart.</h1>
-          </div>
-        </div>
-        <div className="right">
-          {isLogged ? (
-            <>
-              <Link to="/home">
-                <div className="menuitems"></div>
-              </Link>
-              <Link to="/signup">
-                <div to="/signup" className="menuitems">
-                  REGISTER
-                </div></Link>
-                <Link to="/login">
-                <div className="menuitems">SIGN IN</div>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/home">
-                <div className="menuitems"></div>
-              </Link>
-              <Link to="/signup">
-                <div to="/signup" className="menuitems">
-                  REGISTER
-                </div>
-              </Link>
-              <Link to="/login">
-                <div className="menuitems">SIGN IN</div>
-              </Link>
-              <Link to="/logout">
-                <div className="menuitems">LogOut</div>
-              </Link>
-              <div className="menuitems">
-                <Link to="/cart">
-                  <StyledBadge
-                    badgeContent={cartItems.length}
-                    color="secondary"
-                  >
-                    <ShoppingCartIcon />
-                  </StyledBadge>
-                </Link>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+  <div className="container1">
+  <div className="Wrapper">
+  <div className="left">
+  <div className="Language">EN</div>
+  <div className="search">
+  <input /> <SearchIcon style={{ color: "gray", fontSize: "16px" }} />{" "}
+  </div>
+  </div>
+  <div className="center">
+  <div className="logo">
+  <h1>ShopKart.</h1>
+  </div>
+  </div>
+  <div className="right">
+  {isLogged ? (
+  <>
+  <Link to="/home">
+  <div className="menuitems">Home</div>
+  </Link>
+  </>
+  ) : (
+  <>
+  <Link to="/signup">
+  <div className="menuitems">Signup</div>
+  </Link>
+  <Link to="/login">
+  <div className="menuitems">Login</div>
+  </Link>
+  <Link to="/logout">
+  <div className="menuitems">LogOut</div>
+  </Link>
+  <div className="menuitems">
+  <Link to="/cart">
+  <StyledBadge badgeContent={cartItems.length} color="secondary">
+  <ShoppingCartIcon />
+  </StyledBadge>
+  </Link>
+  </div>
+  </>
+  )}
+  </div>
+  </div>
+  </div>
   );
-}
-
-export default Navbar;
+  }
+  
+  export default Navbar;
