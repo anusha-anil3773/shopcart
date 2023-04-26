@@ -1,102 +1,61 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Form, Row, Col, Button } from 'reactstrap'
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Navbar from '../../components/Navbar/Navbar';
+import './login.css';
+import { loginRequest } from '../../redux/action/UserAction';
+import { useNavigate } from 'react-router-dom';
 
-import FormControl from './FormControl'
-import { loginUserAction } from '../../redux/action/UserAction.js'
+function Login(props) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-class Login extends Component {
+  const login = (event) => {
+    event.preventDefault();
+    props.dispatch(loginRequest(username, password));
+  };
+  if (props.loginStatus) {
+    navigate('/home');
+  }
 
-    state = {
-        data: {
-            username: '',
-            password: ''
-        },
-        errors: {}
-    }
 
-    validate = () => {
-        const { data } = this.state
-        const errors = {}
-
-        if (data.username === '') errors.username = 'Username cannot be blank.'
-        if (data.password === '') errors.password = 'Password cannot be blank.'
-
-        return errors
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault()
-        const { data } = this.state
-        const errors = this.validate()
-
-        if (Object.keys(errors).length === 0) {
-            this.props.login(data)
-
-            this.setState({
-                data: {
-                    username: '',
-                    password: ''
-                },
-                errors: {}
-            })
-        } else {
-            this.setState({
-                errors
-            })
-        }
-    }
-
-    handleChange = (e) => {
-        this.setState({
-            data: {
-                ...this.state.data,
-                [e.target.id]: e.target.value
-            },
-            errors: {
-                ...this.state.errors,
-                [e.target.id]: ''
-            }
-        })
-    }
-
-    render() {
-        const { data, errors } = this.state
-
-        return (
-            <Row>
-                <Col md={4}>
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormControl
-                            label="Username"
-                            type="text"
-                            value={data.username}
-                            handleChange={this.handleChange}
-                            error={errors.username}
-                        />
-
-                        <FormControl
-                            label="Password"
-                            type="password"
-                            value={data.password}
-                            handleChange={this.handleChange}
-                            error={errors.password}
-                        />
-
-                        <Button color="primary">Login</Button>
-                    </Form>
-                </Col>
-            </Row>
-        )
-    }
+  return (
+    <div>
+      <Navbar />
+      <div className="container">
+        <form className="form" onSubmit={login}>
+          <TextField
+            label="UserName"
+            variant="filled"
+            type="text"
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />{' '}
+          &nbsp; &nbsp;
+          <TextField
+            label="Password"
+            variant="filled"
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />{" "}
+          &nbsp; &nbsp;
+          <Button type="submit" variant="contained" color="primary">
+            Login
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        login: (username,password) => {
-            dispatch(loginUserAction(username,password))
-        }
-    }
-}
+const mapStateToProps = (state) => ({
+  loginStatus: state.user.loginStatus,
+});
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps)(Login);
+

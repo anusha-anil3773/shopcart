@@ -1,28 +1,16 @@
-import * as types from '../constant'
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-export const loginUserAction = ({ username, password }) => {
-    return {
-        type: types.LOGIN_USER,
-        creds: { username, password }
-    }
-}
+export const loginRequest = (username, password) => ({
+  type: LOGIN_REQUEST,
+  payload: { username, password },
+});
 
+export const loginSuccess = () => ({
+  type: LOGIN_SUCCESS,
+});
 
-export const userLoggedIn = ({ username,password  }) => {
-    return {
-        type: types.USER_LOGGEDIN,
-        user: { username, password }
-    }
-}
-
-export const logoutUserAction = () => {
-    return {
-        type: types.LOGOUT_USER
-    }
-}
-
-export const userLoggedOut = () => {
-    return {
-        type: types.USER_LOGGEDOUT
-    }
-}
+export const loginFailure = () => ({
+  type: LOGIN_FAILURE,
+});

@@ -1,11 +1,30 @@
-import {configureStore} from '@reduxjs/toolkit'
+// import { configureStore, combineReducers } from '@reduxjs/toolkit';
+// import createSagaMiddleware from 'redux-saga';
+// import UserReducer from './reducers/UserReducer';
+// import userSaga from './saga/userSaga';
+
+// const rootReducer = combineReducers({
+//   user: UserReducer,
+// });
+
+// const sagaMiddleware = createSagaMiddleware();
+
+// const store = configureStore({
+//   reducer: rootReducer,
+//   middleware: [sagaMiddleware],
+// });
+
+// sagaMiddleware.run(userSaga);
+
+// export default store;
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import rootReducer from './reducers/rootReducer'
-import rootSaga from './saga/rootSaga'
+import userReducer from '../redux/reducers/UserReducer';
+import userSaga from './saga/userSaga';
 
-import { checkUser } from './services/userServices'
-import { userLoggedIn } from './action/UserAction'
-
+const rootReducer = combineReducers({
+  user: userReducer,
+});
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,11 +33,6 @@ const store = configureStore({
   middleware: [sagaMiddleware],
 });
 
-const user = checkUser()
-if (user) {
-    store.dispatch(userLoggedIn(user))
-}
+sagaMiddleware.run(userSaga);
 
-sagaMiddleware.run(rootSaga);
-
-export default store
+export default store;

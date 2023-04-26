@@ -1,16 +1,27 @@
-import { USER_LOGGEDIN, USER_LOGGEDOUT } from '../constant'
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../action/UserAction';
 
-const initialState = null
+const initialState = {
+    loginStatus: false,
+  };
 
-export const UserReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case USER_LOGGEDIN:
-            return action.user
+const loginReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      return {
+        ...state,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loginStatus: true,
+      };
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+      };
+    default:
+      return state;
+  }
+};
 
-        case USER_LOGGEDOUT:
-            return initialState
-
-        default:
-            return state
-    }
-}
+export default loginReducer;
