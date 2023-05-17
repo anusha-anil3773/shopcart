@@ -2,10 +2,10 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-export const loginRequest = (username, password) => ({
+export const loginRequest = (username, password) => ({ //action object 
   type: LOGIN_REQUEST,
   payload: { username, password },
-});
+})
 
 export const loginSuccess = () => ({
   type: LOGIN_SUCCESS,

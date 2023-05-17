@@ -27,5 +27,4 @@ function* login(action) {
 function* loginSaga() {
   yield takeLatest(LOGIN_REQUEST, login);
 }
-
 export default loginSaga;

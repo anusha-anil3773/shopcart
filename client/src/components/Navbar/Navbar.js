@@ -39,8 +39,11 @@ function Navbar({ isLogged }) {
   <div className="right">
   {isLogged ? (
   <>
-  <Link to="/home">
-  <div className="menuitems">Home</div>
+  <Link to="/signup">
+  <div className="menuitems">Signup</div>
+  </Link>
+  <Link to="/login">
+  <div className="menuitems">Login</div>
   </Link>
   </>
   ) : (
@@ -51,7 +54,7 @@ function Navbar({ isLogged }) {
   <Link to="/login">
   <div className="menuitems">Login</div>
   </Link>
-  <Link to="/logout">
+  <Link to="/">
   <div className="menuitems">LogOut</div>
   </Link>
   <div className="menuitems">

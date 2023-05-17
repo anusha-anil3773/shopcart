@@ -55,7 +55,7 @@ function Cart() {
   }
   
   useEffect(() => {
-  }, [increment, decrement]);
+  }, [increment, decrement,deleteItem]);
   
 
 return (

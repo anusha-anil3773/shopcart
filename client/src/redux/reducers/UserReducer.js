@@ -1,9 +1,9 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../action/UserAction';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../action/UserAction'; // action types
 
 const initialState = {
     loginStatus: false,
   };
-
+  
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:

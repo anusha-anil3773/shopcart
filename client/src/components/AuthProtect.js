@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 function AuthProtect(props) {
-  if (props.isAuth) {
+  if (!props.islogged) {
     return <Navigate to="/home" />;
   }
   return props.children;
